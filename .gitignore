@@ -25,6 +25,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vsconfig
 
 # Gradle cache directory
 .gradle/
@@ -73,3 +74,6 @@ crashlytics-build.properties
 
 # for mac.... sry
 .DS_Store
+
+# Firebase
+/[Aa]ssets/[Ff]irebase/*
