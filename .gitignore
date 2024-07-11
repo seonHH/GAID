@@ -77,3 +77,6 @@ crashlytics-build.properties
 
 # Firebase
 /[Aa]ssets/[Ff]irebase/*
+
+# config.txt
+/[Aa]ssets/config.*

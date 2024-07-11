@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Android;
 using UnityEngine.SceneManagement;
@@ -6,7 +7,7 @@ using UnityEngine.UI;
 
 public class TrackingManager : MonoBehaviour
 {
-    public string LisenseKey = "Input your key";
+    private string LisenseKey;
     public GameObject OverlayCanvas;
 
     // Status
@@ -46,7 +47,29 @@ public class TrackingManager : MonoBehaviour
 
     void Awake()
     {
+        LoadLicenseKey();
         DontDestroyOnLoad(gameObject);
+    }
+
+    private void LoadLicenseKey()
+    {
+        string filePath = Path.Combine(Application.dataPath, "config.txt");
+        if (File.Exists(filePath))
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            foreach (string line in lines)
+            {
+                if (line.StartsWith("LicenseKey:"))
+                {
+                    LisenseKey = line.Substring("LicenseKey:".Length).Trim();
+                    break;
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("Configuration file not found: config.txt");
+        }
     }
 
     void Start()
