@@ -34,7 +34,7 @@ public class ProgressScoreCalculate : MonoBehaviour
         // 진척도 계산
         int playTime = (int)(endTime - startTime);
         int tryNumber = tryCount - 1;
-        int progressScore = initialProgressScore - (playTime / 10) - (tryNumber * 5);
+        int newProgressScore = initialProgressScore - (playTime / 10) - (tryNumber * 5);
         float correctScore = 1 / tryCount;
         // fg의 별을 찾아줘는 답이 여러 개라 정확도 계산 다름.
         if (gameName == "fg" && level == 0)
@@ -44,15 +44,33 @@ public class ProgressScoreCalculate : MonoBehaviour
 
         // 해당 회차 정보를 훈련 저장
         // Save game session -> need to add attention score.
-        // LocalDataManager.Instance.AddGameSession( gameName , DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss"), level, progressScore, tryCount, 1 / (tryCount), playTime, concentrationScore);
+        // LocalDataManager.Instance.AddGameSession( gameName , DateTime.Now.ToString("yyyy-MM-dd-HH:mm:ss"), level, newProgressScore, tryCount, 1 / (tryCount), playTime, concentrationScore);
 
 
+        /*
+        progressScore += newProgressScore ;
+        if (progressScore >= 350)
+        {
+            if(level == 3)
+            {
+                return;
+            }
+            level += 1;
+            progressScore = 0;
+        }
+        */
 
         /*UserDataManager.Instance.UpdateLevel();
             update level for the game
         void UpdateLevel(string game, int level, int stars, int prog)
-        */
 
+        0 ~ 50 : 0 star
+        51 ~ 150 : 1 star
+        150 ~ 250 : 2 star
+        251 ~ 350 : 3 star
+
+        350점 되면 다음 레벨 해금, prog 0으로 초기화
+        */
 
 
     }
