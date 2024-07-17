@@ -5,9 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System;
 
 public class FindStar : MonoBehaviour
 {
+    // 초기 시간, 종료 시간을 저장 할 변수
+    private int startTime;
+    private float endTime;
+
+    // 시도 횟수를 저장 할 변수
+    private int tryCount = 0;
+
+    // 찾은 별의 개수
+    private int starCount = 0;
+
+    // 각 오브젝트를 씬에서 찾아서 할당
     public GameObject btn_animal;
     public GameObject btn_star_yellow;
     public GameObject btn_star_red;
@@ -23,8 +35,17 @@ public class FindStar : MonoBehaviour
     public float xRandomRange = 4.4f;
     public float yRandomRange = 2f;
 
+    // 진척도 계산 및 DB 저장을 위한 스크립트
+    public GameObject ProgressScoreCalculate;
+
+    // 유저 고유 진척도 저장 변수
+    private int initialProgressScore;
+
     void Start()
     {
+        // 시작 시간 설정
+        startTime = int.Parse(DateTime.Now.ToString("HHmmss"));
+
         // 각 오브젝트를 씬에서 찾아서 할당
         // 오브젝트는 FindStarCanvas의 자식으로 들어가 있어용
         btn_animal = GameObject.Find("FindStarCanvas/btn_animal");
@@ -46,9 +67,9 @@ public class FindStar : MonoBehaviour
         // xRandomRange = 4.4f;
         // yRandomRange = 2f;
 
-        starPos[0] = new Vector3(Random.Range(xRandomRange, -xRandomRange), Random.Range(yRandomRange, -yRandomRange), 0);
-        starPos[1] = new Vector3(Random.Range(xRandomRange, -xRandomRange), Random.Range(yRandomRange, -yRandomRange), 0);
-        starPos[2] = new Vector3(Random.Range(xRandomRange, -xRandomRange), Random.Range(yRandomRange, -yRandomRange), 0);
+        starPos[0] = new Vector3(UnityEngine.Random.Range(xRandomRange, -xRandomRange), UnityEngine.Random.Range(yRandomRange, -yRandomRange), 0);
+        starPos[1] = new Vector3(UnityEngine.Random.Range(xRandomRange, -xRandomRange), UnityEngine.Random.Range(yRandomRange, -yRandomRange), 0);
+        starPos[2] = new Vector3(UnityEngine.Random.Range(xRandomRange, -xRandomRange), UnityEngine.Random.Range(yRandomRange, -yRandomRange), 0);
 
         RectTransform yellowRectTransform = btn_star_yellow.GetComponent<RectTransform>();
         RectTransform blueRectTransform = btn_star_blue.GetComponent<RectTransform>();
@@ -71,6 +92,10 @@ public class FindStar : MonoBehaviour
     // touch 된게 animal이면, retry 메세지를 1초 동안  띄운다.
     public void btnClicked()
     {
+        // 시도 횟수 증가
+        tryCount++;
+
+        // 클릭 된 오브젝트를 저장
         GameObject clkedObj = EventSystem.current.currentSelectedGameObject;
         Debug.Log("Clicked Object Name: " + clkedObj.name);
 
@@ -79,6 +104,22 @@ public class FindStar : MonoBehaviour
             msg_congrate.SetActive(true);
             StartCoroutine(ShowCongrate());
             clkedObj.SetActive(false);
+
+            // 찾은 별의 개수 증가
+            starCount++;
+
+            // 모든 별을 찾았을 경우
+            if (starCount == 3)
+            {
+                // 종료 시간 설정
+                endTime = int.Parse(DateTime.Now.ToString("HHmmss"));
+
+                // 진척도 계산 함수 호출
+                // concentrationScore 아직 미구현
+                // CalculateProgressScore("fg", 0, startTime, endTime, tryCount, concentrationScore );
+
+                // 게임 종료 코드 추가
+            }
         }
         else if (clkedObj.name == "btn_animal")
         {
