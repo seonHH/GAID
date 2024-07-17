@@ -281,15 +281,23 @@ public class SurveyMamager : MonoBehaviour
     // 완료 버튼을 누르면 실행되는 함수 선언
     public void FinishSurvey()
     {
-        // 설문 결과를 저장하는 SurveyResult 배열을 출력
-        for (int i = 0; i < 8; i++)
+        // 초기 100에서 설문조사로 구해진 뺄 값을 저장하는 변수
+        int progressScoreOffset = 0;
+
+        // Survey Result의 3 ~ 7 index에 대한 값을 더한다.
+        for (int i = 3; i < 8; i++)
         {
-            Debug.Log("index : " + i + " value : " + SurveyResult[i]);
+            progressScoreOffset += SurveyResult[i] * 3; // 최대 15점 감점
         }
-        // 변수들 출력
-        Debug.Log("birth_year : " + birth_year);
-        Debug.Log("input_IQ : " + input_IQ);
-        Debug.Log("level_toggle : " + level_toggle);
+
+        // level_toggle에 따라 progressScoreOffset을 더한다.
+        progressScoreOffset += level_toggle * 5; // mild : 5, moderate : 10, severe : 15, profound : 20
+
+        // 초기 진척도 100에서 progressScoreOffset을 뺀 값을 DB에 저장한다.
+        int initialProgressScore = 100 - progressScoreOffset;
+
+        // 동규 동규 동규 동규 동규 동규 동규 동규 동규 동규 동규 동규 동규 동규 동규 동규
+        // initialProgressScore를 유저 초기 진척도로 저장
 
     }
 
