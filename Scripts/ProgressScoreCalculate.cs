@@ -72,6 +72,33 @@ public class ProgressScoreCalculate : MonoBehaviour
         350점 되면 다음 레벨 해금, prog 0으로 초기화
         */
 
+        // 해당 회차 게임 결과( 진척도 )가 추가 된 prog값에 따라 star와 별 갱신
+        if (Prog > 350)
+        {
+            if (level == 3)
+            {
+                return;
+            }
+            level += 1;
+            progressScore = 0;
+        }
+        else if (Prog > 250)
+        {
+            star = 3;
+        }
+        else if (Prog > 150)
+        {
+            star = 2;
+        }
+        else if (Prog > 50)
+        {
+            star = 1;
+        }
+        else
+        {
+            star = 0;
+        }
+
 
     }
 
