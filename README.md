@@ -100,3 +100,7 @@ Spatial Relationships	Identify relational position between multiple objects
 	•	Advisor: Mihye Kim (Chungbuk National Univ.)
 
 ⸻
+
+### 🖼️ Poster
+
+![](./GAID_poster.png)
