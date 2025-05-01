@@ -23,32 +23,32 @@ GAID (Game for Attention and Intellectual Development) is a Unity-based mobile g
 ⸻
 
 ### 🌍 Competitions
-	•	🇬🇧 ICCAS 2024 – 2nd Place Winner
-	•	🇬🇧 EKC 2024
+ - 🇬🇧 ICCAS 2024 – 2nd Place Winner 🏆
+ - 🇬🇧 EKC 2024
 
 ⸻
 
 ### 🧠 Why This Game?
 
 Traditional visual perception training programs have key limitations:
-	•	❌ Lack of motivation due to static content
-	•	❌ Insufficient engagement from children
-	•	❌ Not optimized for mobile familiarity
+ - ❌ Lack of motivation due to static content
+ - ❌ Insufficient engagement from children
+ - ❌ Not optimized for mobile familiarity
 
 GAID solves this with:
-	•	✅ Interactive gameplay using eye-tracking (SeeSo SDK)
-	•	✅ Cute characters & sound effects to keep users engaged
-	•	✅ Familiar mobile interface & gamified structure
+ - ✅ Interactive gameplay using eye-tracking (SeeSo SDK)
+ - ✅ Cute characters & sound effects to keep users engaged
+ - ✅ Familiar mobile interface & gamified structure
 
 ⸻
 
 ### 🏗 System Architecture
-	•	[S1] Firebase Authentication – 사용자 인증
-	•	[S2] Firebase Firestore – 훈련 진행도 및 유저 정보 저장
-	•	[S3] Firebase Cloud Storage – 정적 리소스 저장
-	•	[S4] SeeSo – 시선 추적 (Eye Tracking)
-	•	[S5] Local DB – 훈련 결과 저장 (JSON)
-	•	[S6] Unity – 전체 앱 구현
+- [S1] Firebase Authentication – 사용자 인증
+- [S2] Firebase Firestore – 훈련 진행도 및 유저 정보 저장
+- [S3] Firebase Cloud Storage – 정적 리소스 저장
+- [S4] SeeSo – 시선 추적 (Eye Tracking)
+- [S5] Local DB – 훈련 결과 저장 (JSON)
+- [S6] Unity – 전체 앱 구현
 
 ⸻
 
@@ -77,31 +77,18 @@ Spatial Relationships	Identify relational position between multiple objects
 
 ⸻
 
-### 📱 Screenshots
-
-(Add gameplay screenshots or tutorial UI here if available)
-
-⸻
-
 ### 🛠 Technologies Used
-	•	Unity (C#)
-	•	Firebase Suite (Auth, Firestore, Storage)
-	•	SeeSo SDK – Gaze tracking
-	•	Android/iOS platform support
+- Unity (C#)
+- Firebase Suite (Auth, Firestore, Storage)
+- SeeSo SDK – Gaze tracking
+- Android/iOS platform support
 
 ⸻
 
 ### 🔮 Future Plans
-	•	➕ Add more training modules and levels
-	•	🌍 Expand support to wider age groups and other disabilities
-	•	📈 Conduct empirical research for efficacy validation
-
-⸻
-
-### 📚 References
-	1.	World Health Organization. ICD-11 Classification (2024)
-	2.	Kim, S. (2017). The Effect of Visual Perception Program Training on Visual Perception and Memory
-	3.	Yeo, G. (2007). Visual Perception Training Program. Daegu University Press
+- ➕ Add more training modules and levels
+- 🌍 Expand support to wider age groups and other disabilities
+- 📈 Conduct empirical research for efficacy validation
 
 ⸻
 
