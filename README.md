@@ -1,106 +1,135 @@
+<div align="center">
 
+# GAID
 
-## GAID
+**Game for Attention and Intellectual Development**
 
-🧠 Visual Perception Training Game for Children with Intellectual Disabilities
-👑 2nd Place @ ICCAS 2024 (UK)
+A Unity mobile game that trains visual perception, short-term memory, and concentration in children with mild-to-moderate intellectual disabilities, using eye-tracking and gamified exercises.
 
+[![Unity](https://img.shields.io/badge/Unity-2022.3_LTS-000000?logo=unity&logoColor=white)](https://unity.com/)
+[![C#](https://img.shields.io/badge/C%23-239120?logo=csharp&logoColor=white)](https://learn.microsoft.com/dotnet/csharp/)
+[![Firebase](https://img.shields.io/badge/Firebase-FFCA28?logo=firebase&logoColor=black)](https://firebase.google.com/)
+[![SeeSo SDK](https://img.shields.io/badge/SeeSo-Eye_Tracking-4B8BBE)](https://visual.camp/)
+[![Android](https://img.shields.io/badge/Android-3DDC84?logo=android&logoColor=white)](#)
+[![iOS](https://img.shields.io/badge/iOS-000000?logo=apple&logoColor=white)](#)
+[![ICCAS 2024](https://img.shields.io/badge/ICCAS_2024-2nd_Place-FFD700)](#awards)
 
-⸻
+</div>
 
-### 🎯 Project Overview
+---
 
-GAID (Game for Attention and Intellectual Development) is a Unity-based mobile game that aims to enhance the visual perception, short-term memory, and concentration of children aged 5–12 with mild to moderate intellectual disabilities.
+## Overview
 
-👧👦 “An engaging game with visual/audio effects and eye-tracking designed for neurodiverse learners.”
+GAID targets children aged 5–12 with mild to moderate intellectual disabilities. Paper-based perception training tends to lose a child's attention before any of it sinks in, so we replaced the worksheet with a touch-driven mobile game that quietly measures gaze, accuracy, and time-on-task while the kid plays.
 
-⸻
+Built between March and August 2024 as a five-person university project. Won 2nd place at ICCAS 2024 (UK) and shown at EKC 2024.
 
-### 📅 Duration
+## Training Modules
 
-2024.03.26 ~ 2024.08.05
+Five modules, three difficulty levels each. The taxonomy follows the standard visual-perception categories used in clinical assessments.
 
-⸻
+| Module | Folder | What It Trains |
+| --- | --- | --- |
+| Visual-Motor Coordination | `VM/` | Move a gaze-locked character toward a destination |
+| Figure-Ground Perception | `FG/` | Find a target hidden inside a cluttered scene |
+| Perceptual Constancy | `PC/` | Recognise the same object across scale / rotation changes |
+| Position in Space | `SP/` | Read orientation and relative position |
+| Spatial Relationships | `SR/` | Identify layouts between multiple objects |
 
-### 🌍 Competitions
- - 🇬🇧 ICCAS 2024 – 2nd Place Winner 🏆
- - 🇬🇧 EKC 2024
+## Metrics
 
-⸻
+Every session writes the following to a local JSON cache, then syncs to Firestore once the user is signed in.
 
-### 🧠 Why This Game?
+| Metric | Source | Description |
+| --- | --- | --- |
+| Play Time | Session timer | Total interaction duration per stage |
+| Accuracy | Stage attempts | Correct answers vs. total attempts |
+| Concentration | SeeSo gaze tracker | On-target gaze ratio during play |
+| Progress Score | Pre-game survey | Weighted score reflecting baseline severity |
 
-Traditional visual perception training programs have key limitations:
- - ❌ Lack of motivation due to static content
- - ❌ Insufficient engagement from children
- - ❌ Not optimized for mobile familiarity
+## Architecture
 
-GAID solves this with:
- - ✅ Interactive gameplay using eye-tracking (SeeSo SDK)
- - ✅ Cute characters & sound effects to keep users engaged
- - ✅ Familiar mobile interface & gamified structure
+```
+        ┌─────────────────────────────┐
+        │      Unity Client (C#)      │
+        │   Scenes · UI · Gameplay    │
+        └──────────────┬──────────────┘
+                       │
+         ┌─────────────┼──────────────┐
+         │             │              │
+         ▼             ▼              ▼
+   ┌──────────┐  ┌──────────┐  ┌────────────┐
+   │  SeeSo   │  │ Local DB │  │  Firebase  │
+   │  (gaze)  │  │  (JSON)  │  │ Auth · FS  │
+   └──────────┘  └──────────┘  │  Storage   │
+                               └────────────┘
+```
 
-⸻
+- **Unity (C#)** — gameplay, scene flow, and UI under `Scripts/`
+- **Firebase Auth** — email sign-in via `Scripts/DB/SignInManager.cs`, `SignUpManager.cs`
+- **Cloud Firestore** — user profile and progress through `FirebaseManager.cs`, `UserDataManager.cs`
+- **Cloud Storage** — static art assets fetched by `AssetCheck.cs`
+- **SeeSo SDK** — gaze calibration and live tracking in `TrackingManager.cs`, `CalibrationHandler.cs`
+- **Local cache** — offline-safe JSON store in `LocalDataManager.cs`
 
-### 🏗 System Architecture
-- [S1] Firebase Authentication – 사용자 인증
-- [S2] Firebase Firestore – 훈련 진행도 및 유저 정보 저장
-- [S3] Firebase Cloud Storage – 정적 리소스 저장
-- [S4] SeeSo – 시선 추적 (Eye Tracking)
-- [S5] Local DB – 훈련 결과 저장 (JSON)
-- [S6] Unity – 전체 앱 구현
+## Repository Layout
 
-⸻
+```
+GAID/
+├── Scenes/              Unity scenes (auth, level select, survey, per-module)
+├── Scripts/
+│   ├── DB/              Firebase, auth, gaze tracking, local cache
+│   ├── Common/          Shared UI + graph plotting
+│   ├── FG/ PC/ SP/ SR/  Per-module gameplay logic
+│   └── VisualMotor/     Gaze-driven movement
+├── Prefabs/             Reusable UI prefabs (charts, indices, points)
+├── Images/              Backgrounds and per-module sprites
+├── FG/ PC/ SP/ SR/ VM/  Per-level scenes
+└── GAID_poster.png      Conference poster
+```
 
-### 📊 Collected Metrics
+## Getting Started
 
-Metric	Description
-Play Time	Total duration of game interaction
-Accuracy	Attempts vs. correct answers
-Concentration	Gaze-based attention measurement using SeeSo
-Progress Score	Survey-based scoring reflecting intellectual disability severity
+**Requirements**
 
+- Unity 2022.3 LTS (with Android and/or iOS build modules)
+- A Firebase project with Authentication, Firestore, and Storage enabled
+- A SeeSo SDK license key from [visual.camp](https://visual.camp/)
 
+**Setup**
 
-⸻
+1. Clone the repository and open it from Unity Hub.
+2. Drop your Firebase config into the project:
+   - Android → `google-services.json`
+   - iOS → `GoogleService-Info.plist`
+3. Paste your SeeSo license key into the tracking configuration object referenced by `TrackingManager.cs`.
+4. Open `Scenes/SignInScene.unity` and press Play, or build directly to a device.
 
-### 🎮 Training Areas
+## Awards
 
-Visual Perception Type	Description
-Visual-Motor Coordination	Gaze at target character to move it to destination
-Figure-Ground Perception	Distinguish target object from background
-Perceptual Constancy	Recognize same object regardless of size/orientation changes
-Perception of Position	Understand spatial relationships between objects
-Spatial Relationships	Identify relational position between multiple objects
+- **ICCAS 2024** (UK) — 2nd Place
+- **EKC 2024** (UK) — Selected exhibition
 
+## Team
 
+| Member | Affiliation |
+| --- | --- |
+| Seonwoong Hwang | Pusan National University |
+| Yui Cho | Inha University |
+| Sojeong Kim | Kyungwoon University |
+| Donggyu Na | Chungbuk National University |
+| Mihye Kim *(Advisor)* | Chungbuk National University |
 
-⸻
+## Roadmap
 
-### 🛠 Technologies Used
-- Unity (C#)
-- Firebase Suite (Auth, Firestore, Storage)
-- SeeSo SDK – Gaze tracking
-- Android/iOS platform support
+- More modules and a finer difficulty curve
+- Empirical validation with partner clinics
+- Broader age range and support for adjacent cognitive profiles
 
-⸻
+---
 
-### 🔮 Future Plans
-- ➕ Add more training modules and levels
-- 🌍 Expand support to wider age groups and other disabilities
-- 📈 Conduct empirical research for efficacy validation
+## Poster
 
-⸻
-
-### 🙋‍♀️ Contributors
-	•	Seonwoong Hwang (Pusan National Univ.)
-	•	Yui Cho (Inha Univ.)
-	•	Sojeong Kim (Kyungwoon Univ.)
-	•	Donggyu Na (Chungbuk National Univ.)
-	•	Advisor: Mihye Kim (Chungbuk National Univ.)
-
-⸻
-
-### 🖼️ Poster
-
-![](./GAID_poster.png)
+<p align="center">
+  <img src="./GAID_poster.png" alt="GAID conference poster — ICCAS 2024" width="760">
+</p>
